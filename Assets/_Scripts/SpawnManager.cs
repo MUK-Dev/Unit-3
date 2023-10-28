@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject obstaclePrefab;
+    [SerializeField] private GameObject[] obstaclePrefabs;
     [SerializeField] private float initialDelay = 1f;
     [SerializeField] private float reSpawnAfter = 2f;
 
@@ -14,7 +14,12 @@ public class SpawnManager : MonoBehaviour
     }
     private void SpawnObstacle()
     {
-        if (!RunnerGameManager.Instance.IsGameOver())
-            Instantiate(obstaclePrefab, spawnPosition, obstaclePrefab.transform.rotation);
+        bool isGameOver = RunnerGameManager.Instance.IsGameOver();
+        bool isGameStarted = RunnerGameManager.Instance.IsGameStarted();
+        if (!isGameOver && isGameStarted)
+        {
+            GameObject randomObstacle = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
+            Instantiate(randomObstacle, spawnPosition, randomObstacle.transform.rotation);
+        }
     }
 }

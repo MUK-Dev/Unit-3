@@ -8,7 +8,9 @@ public class MoveLeft : MonoBehaviour
 
     private void Update()
     {
-        if (!RunnerGameManager.Instance.IsGameOver())
+        bool isGameOver = RunnerGameManager.Instance.IsGameOver();
+        bool isGameStarted = RunnerGameManager.Instance.IsGameStarted();
+        if (!isGameOver && isGameStarted)
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
